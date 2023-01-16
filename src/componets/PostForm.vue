@@ -1,20 +1,21 @@
 <template>
   <form @submit.prevent>
+    <h4 class="title">Создание поста</h4>
     <input class="input"
            type="text"
            placeholder="Название"
-           @input="post.title = $event.target.value"
-           v-bind:value="post.title"
+           v-model="post.title"
     >
 
     <input class="input"
            type="text"
-           placeholder="Описание"
-           @input="post.body = $event.target.value"
-           v-bind:value="post.body"
+           v-model="post.body"
     >
 
-    <button class="button">Создать</button>
+    <button
+        class="button"
+        @click="createPost"
+    >Создать</button>
   </form>
 </template>
 
@@ -28,6 +29,16 @@ export default {
         body:  '',
       }
     }
+  },
+  methods:{
+    createPost() {
+      this.post.id = Date.now();
+      this.$emit('create', this.post)
+      this.post ={
+        title: '',
+        body:  '',
+      }
+    },
   }
 }
 </script>
@@ -60,6 +71,12 @@ form {
   background: teal;
   color: white;
   border: 1px solid white;
+}
+
+.title{
+  color: white;
+  padding: 10px 15px;
+  border: 1px dashed white;
 }
 
 </style>
