@@ -1,13 +1,19 @@
 <template>
-  <div class="post" v-for="post in posts">
-    <div>Название: {{ post.title }}</div>
-    <div>Описание: {{ post.body }}</div>
+  <div>
+    <h3 class="title">Список постов</h3>
+      <post-item
+          v-for="post in posts"
+          :post="post"
+      />
   </div>
 </template>
 
 <script>
+import PostItem from "@/componets/PostItem.vue";
+
 export default {
   name: "PostList",
+  components: {PostItem},
   props: {
     posts: {
       type:Array,
@@ -19,11 +25,11 @@ export default {
 
 <style scoped>
 
-.post {
-  margin-bottom: 5px;
-  padding: 15px;
-  border: 2px solid teal;
+.title{
   color: white;
+  padding: 10px 15px;
+  border: 1px dashed white;
+  text-align: center;
 }
 
 </style>
