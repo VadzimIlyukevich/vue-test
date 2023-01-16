@@ -6,31 +6,49 @@ export default {
         {id: 1, title: 'JavaScript', body: 'ТОП'},
         {id: 2, title: 'Python', body: 'ТОП'},
         {id: 3, title: 'C++', body: 'ТОП'},
-      ]
+      ],
+      title: '',
+      body: '',
     }
   },
   methods: {
-    addLike() {
-      this.likes += 1
+    createPost(){
+      const newPost = {
+        id: Date.now(),
+        title: this.title,
+        body: this.body,
+      }
+      this.posts.push(newPost);
+      this.title = '';
+      this.body = '';
     },
-    addDislike() {
-      this.dislikes += 1
-    }
   }
 }
 </script>
 
 <template>
   <div class="app">
-    <form>
-      <input class="input" type="text" placeholder="Название">
-      <input class="input" type="text" placeholder="Описание">
-      <button class="button">Создать</button>
+    <form @submit.prevent>
+      <input class="input"
+             type="text"
+             placeholder="Название"
+             @input="title = $event.target.value"
+             v-bind:value="title"
+      >
+
+      <input class="input"
+             type="text"
+             placeholder="Описание"
+             @input="body = $event.target.value"
+             v-bind:value="body"
+      >
+
+      <button class="button" @click="createPost">Создать</button>
     </form>
     <div>
       <div class="post" v-for="post in posts">
-        <div><strong>Название: {{ post.title }}</strong> {{ post.body }}</div>
-        <div><strong>Описание:</strong> {{ post.title }} {{ post.body }}</div>
+        <div><strong>Название:</strong> {{ post.title }}</div>
+        <div><strong>Описание:</strong> {{ post.body }}</div>
       </div>
     </div>
   </div>
