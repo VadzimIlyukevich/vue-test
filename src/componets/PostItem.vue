@@ -5,12 +5,13 @@
       <div>Описание: {{ post.body }}</div>
     </div>
     <div class="post__btns">
-      <button class="button">Удалить</button>
+      <PostButton>Удалить</PostButton>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "PostItem",
   props:{
@@ -32,22 +33,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.button{
-  align-self: flex-end;
-  margin-bottom: 10px;
-  padding: 10px 15px;
-  font-size: 14px;
-  color: teal;
-  background: none;
-  border: 1px solid teal;
-}
-
-.button:active{
-  background: teal;
-  color: white;
-  border: 1px solid white;
 }
 
 </style>
