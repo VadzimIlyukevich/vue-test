@@ -10,7 +10,7 @@ export default {
   },
   methods:{
     updateInput(event) {
-      this.$emit('update:modalValue', event.target.value)
+      this.$emit("update:modelValue", event.target.value)
     }
   }
 }
@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 .input {
-  width: 100%;
+  width: 90%;
   border: 1px solid teal;
   padding: 10px 15px;
   margin: 10px 10px;

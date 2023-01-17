@@ -1,11 +1,13 @@
 <template>
   <form @submit.prevent>
     <h4 class="title">Создание поста</h4>
-    <PostInput placeholder="Название"
+    <PostInput
+        placeholder="Название"
            v-model="post.title"
     />
 
-    <PostInput placeholder="Описание"
+    <PostInput
+        placeholder="Описание"
         v-model="post.body"
     />
 
