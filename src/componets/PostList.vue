@@ -1,11 +1,19 @@
 <template>
-  <div>
-    <h3 class="title">Список постов</h3>
+  <div v-if="posts.length > 0">
+    <hr class="separator">
+    <h2 class="title">Список постов</h2>
       <post-item
           v-for="post in posts"
           :post="post"
+          :key="post.id"
+          @remove="$emit('remove', post)"
       />
   </div>
+  <div v-else>
+    <hr class="separator">
+    <h2 class="title">Список постов пуст</h2>
+  </div>
+
 </template>
 
 <script>
@@ -30,6 +38,10 @@ export default {
   padding: 10px 15px;
   border: 1px dashed white;
   text-align: center;
+}
+
+.separator{
+  color: white;
 }
 
 </style>
