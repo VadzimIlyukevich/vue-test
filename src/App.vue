@@ -1,15 +1,12 @@
 <script>
-import PostForm from "@/componets/PostForm.vue";
-import PostList from "@/componets/PostList.vue";
-import PostDialog from "@/componets/UI/PostDialog.vue";
-import PostButton from "@/componets/UI/PostButton.vue";
 import axios from "axios";
+import PostList from "@/componets/PostList.vue";
+import PostForm from "@/componets/PostForm.vue";
 
 export default {
   components:{
-    PostButton,
-    PostDialog,
-    PostList, PostForm
+    PostList,
+    PostForm,
   }
   ,
   data() {
@@ -17,6 +14,11 @@ export default {
       posts: [],
       dialogVisible: false,
       isPostsLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        {value: 'title', name: 'по названию'},
+        {value:  'body', name: 'по содержанию'},
+      ]
     }
   },
   methods: {
@@ -51,8 +53,12 @@ export default {
 <template>
   <div class="app">
     <h1 class="title">Страница с постами</h1>
-    <div class="flex">
+    <div class="app_btns">
     <post-button @click="showDialog">Создать пост</post-button>
+      <PostSelect
+          v-model="selectedSort"
+          :options="sortOptions"
+      ></PostSelect>
     </div>
     <post-dialog v-model:show="dialogVisible">
       <PostForm @create="createPost"/>
@@ -82,5 +88,10 @@ export default {
 }
 .download{
   color: white;
+}
+.app_btns{
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
