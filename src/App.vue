@@ -46,7 +46,12 @@ export default {
   },
   mounted() {
     this.fetchPosts()
-  }
+  },
+  computed:{
+    sortedPosts(){
+      return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+    }
+  },
 }
 </script>
 
@@ -64,7 +69,7 @@ export default {
       <PostForm @create="createPost"/>
     </post-dialog>
 
-    <PostList :posts="posts" @remove="removePost" v-if="!isPostsLoading"/>
+    <PostList :posts="sortedPosts" @remove="removePost" v-if="!isPostsLoading"/>
     <div class="download" v-else-if="isPostsLoading">Идёт загрузка</div>
   </div>
 </template>
