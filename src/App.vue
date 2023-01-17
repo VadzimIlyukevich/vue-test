@@ -3,6 +3,7 @@ import PostForm from "@/componets/PostForm.vue";
 import PostList from "@/componets/PostList.vue";
 import PostDialog from "@/componets/UI/PostDialog.vue";
 import PostButton from "@/componets/UI/PostButton.vue";
+import axios from "axios";
 
 export default {
   components:{
@@ -13,12 +14,9 @@ export default {
   ,
   data() {
     return {
-      posts: [
-        {id: 1, title: 'JavaScript', body: 'ТОП'},
-        {id: 2, title: 'Python', body: 'ТОП'},
-        {id: 3, title: 'C++', body: 'ТОП'},
-      ],
+      posts: [],
       dialogVisible: false,
+      isPostsLoading: false,
     }
   },
   methods: {
@@ -31,7 +29,21 @@ export default {
     },
     showDialog(){
       this.dialogVisible = true
+    },
+    async fetchPosts(){
+      try {
+        this.isPostsLoading = true
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10')
+        this.posts = response.data
+      } catch (e){
+        alert('Ошибка')
+      } finally {
+        this.isPostsLoading = false
+      }
     }
+  },
+  mounted() {
+    this.fetchPosts()
   }
 }
 </script>
@@ -39,12 +51,15 @@ export default {
 <template>
   <div class="app">
     <h1 class="title">Страница с постами</h1>
-    <post-button @click="showDialog">Создать пользователя</post-button>
+    <div class="flex">
+    <post-button @click="showDialog">Создать пост</post-button>
+    </div>
     <post-dialog v-model:show="dialogVisible">
       <PostForm @create="createPost"/>
     </post-dialog>
 
-    <PostList :posts="posts" @remove="removePost"/>
+    <PostList :posts="posts" @remove="removePost" v-if="!isPostsLoading"/>
+    <div class="download" v-else-if="isPostsLoading">Идёт загрузка</div>
   </div>
 </template>
 
@@ -64,5 +79,8 @@ export default {
   padding: 10px 15px;
   border: 1px dashed white;
   text-align: center;
+}
+.download{
+  color: white;
 }
 </style>
